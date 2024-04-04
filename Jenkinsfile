@@ -23,7 +23,7 @@ pipeline{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonnar-token', installationName: 'sonar-server'){
                         sh '''
-                        $SCANNER_HOME/bin/sonar_scanner -Dsonar.projectName=project-35 \
+                        $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=project-35 \
                             -Dsonar.projectKey=project-35
                         '''
                     }
