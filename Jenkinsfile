@@ -56,7 +56,7 @@ pipeline{
         stage('docker img push'){
             steps{
                 script{
-                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker'){
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
                         sh 'docker push mukeshr29/nodeproject:$BUILD_NUMBER'
                     }
                 }
