@@ -48,15 +48,11 @@ pipeline{
                 }
             }
         }
-        stage('docker img scan'){
-            steps{
-                sh 'trivy image --format table -o trivyimg.html $DOCKER_USERNAME/nodeproject:$BUILD_NUMBER'
-            }
-        }
-        stage('docker img push'){
+        stage('docker img scan and push'){
             steps{
                 script{
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
+                        sh 'trivy image --format table -o trivyimg.html $DOCKER_USERNAME/nodeproject:$BUILD_NUMBER'
                         sh 'docker push $DOCKER_USERNAME/nodeproject:$BUILD_NUMBER'
                     }
                 }
