@@ -40,9 +40,9 @@ pipeline{
         stage('docker build and tag'){
             steps{
                 script{
-                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker'){
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
                         sh '''
-                            docker build -t mukeshr29/nodeproject:$BUILD_NUMBER .
+                            docker build -t $DOCKER_USERNAME/nodeproject:$BUILD_NUMBER .
                         '''
                     }
                 }
@@ -50,14 +50,14 @@ pipeline{
         }
         stage('docker img scan'){
             steps{
-                sh 'trivy image --format table -o trivyimg.html mukeshr29/nodeproject:$BUILD_NUMBER'
+                sh 'trivy image --format table -o trivyimg.html $DOCKER_USERNAME/nodeproject:$BUILD_NUMBER'
             }
         }
         stage('docker img push'){
             steps{
                 script{
                     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]){
-                        sh 'docker push mukeshr29/nodeproject:$BUILD_NUMBER'
+                        sh 'docker push $DOCKER_USERNAME/nodeproject:$BUILD_NUMBER'
                     }
                 }
             }
