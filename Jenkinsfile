@@ -37,5 +37,30 @@ pipeline{
                 }
             }
         }
+        stage('docker build and tag'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker'){
+                        sh '''
+                            docker build -t mukeshr29/nodeproject:$BUILD_NUMBER .
+                        '''
+                    }
+                }
+            }
+        }
+        stage('docker img scan'){
+            steps{
+                sh 'trivy image --format -o trivyimg.html mukeshr29/nodeproject:$BUILD_NUMBER'
+            }
+        }
+        stage('docker img push'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'dockerhub', toolName: 'docker'){
+                        sh 'docker push mukeshr29/nodeproject:$BUILD_NUMBER'
+                    }
+                }
+            }
+        }
     }
 }
