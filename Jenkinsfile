@@ -50,7 +50,7 @@ pipeline{
         }
         stage('docker img scan'){
             steps{
-                sh 'trivy image --format -o trivyimg.html mukeshr29/nodeproject:$BUILD_NUMBER'
+                sh 'trivy image --format table -o trivyimg.html mukeshr29/nodeproject:$BUILD_NUMBER'
             }
         }
         stage('docker img push'){
