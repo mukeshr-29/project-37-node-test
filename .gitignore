@@ -1,0 +1,44 @@
+node_modules
+
+*.swp
+.tmp
+
+# YARN
+.pnp*
+.yarn
+yarn.lock
+yarn-error.log
+.yarnrc
+
+# IDE
+.babel-test-build
+.vscode/
+.DS_Store
+\.idea/
+.history
+
+# NEXT.JS
+.next/
+
+# nyc
+.nyc_output
+coverage
+
+# AquilaCMS
+sitemap.xml
+robots.txt
+
+**/*.bck
+
+# SSL
+**/*.pem
+**/*.crt
+**/*.cert
+**/*.key
+
+# Environment
+ecosystem.config.js
+nodemon.json
+.env
+
+/_VS
